@@ -1,19 +1,33 @@
 import 'package:flutter/material.dart';
-import './listview.dart';
+import './list_data.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({Key? key}) : super(key: key);
-  final List<int> colorCodes = <int>[700, 600, 500, 400, 300, 200, 100];
-
+  const MyApp({Key? key}) : super(key: key);
+  
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: MyListView(),
+      home: Scaffold(
+        body: SafeArea(
+          child: ListView.separated(
+            separatorBuilder: (context, index) => const Divider(),
+            padding: const EdgeInsets.all(15),
+            itemCount: dataFormApi.length,
+            itemBuilder: (BuildContext context, int index){
+              return ListTile(
+                leading: Image.network(dataFormApi[index]['url']!),
+                title: Text(dataFormApi[index]['text']!),
+                subtitle: Text(dataFormApi[index]['subtitle']!),
+              );
+            },
+            ),
+        ),
+      ),
     );
   }
 }
